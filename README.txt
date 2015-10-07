@@ -4,6 +4,7 @@ been very useful in my projects. The packages are:
 
     nft_pool	- A thread pool to execute tasks asynchronously.
     nft_queue	- A message queue for producer-consumer systems.
+    nft_rbtree  - A balanced btree for associative mapping.
     nft_task	- Schedule tasks to execute at a specified time.
     nft_core    - The base class for most of the Nifty packages.
     nft_win32	- A limited pthread emulation layer for Windows.
@@ -19,11 +20,11 @@ I recommend the use of thread cancellation, because I don't.
 
 To build, tweak src/Makefile to your liking, then
 
-   $ cd src ; make
+   $ make -C src
 
 To build and run the unit test programs, do
 
-   $ cd src ; make test
+   $ make -C src test
 
 This code should build on most modern Unix systems, but you may need
 to tweak the Makefile, and you may wish to adjust the implementation
@@ -34,10 +35,15 @@ This file gives a detailed discussion how you can create your own
 See the section "Object-oriented" development based on nft_core,
 below.
 
+Note also that there is a lockless implementation of the handle
+subsystem, which you can enable in the Makefile. This is not yet
+practical, because it also requires you to fix the size of the
+handle table. See src/nft_handle.c for more information.
+
 The libnifty packages can be built on WIN32. For more information,
 refer to the section "WIN32 Notes" below.
 
-This project is hosted at SoureForge:
+This project is hosted at SourceForge.net:
 
   http://sourceforge.net/projects/libnifty/
 
@@ -196,7 +202,7 @@ we discuss how this works in detail.
 "Object-oriented" development based on nft_core
 
 Many of the Nifty packages are derived in "object-oriented" style from nft_core.
-This section discusses how this derivations works. Our approach is as simple as
+This section discusses how this derivation works. Our approach is as simple as
 possible. The goals are to:
 
 * Support only simple single-inheritance,
